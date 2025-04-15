@@ -103,13 +103,27 @@ Add this to your `claude_desktop_config.json`:
   "mcpServers": {
     "gnews": {
       "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-gnews"],
+      "args": ["-y", "@bads1de/mcp-server-gnews"],
       "env": {
         "GNEWS_API_KEY": "YOUR_API_KEY_HERE"
       }
     }
   }
 }
+```
+
+You can also run the server directly from the command line:
+
+```bash
+GNEWS_API_KEY=YOUR_API_KEY_HERE npx -y @bads1de/mcp-server-gnews
+```
+
+**日本語**
+
+コマンドラインから直接サーバーを実行することもできます：
+
+```bash
+GNEWS_API_KEY=YOUR_API_KEY_HERE npx -y @bads1de/mcp-server-gnews
 ```
 
 ## Build
@@ -142,6 +156,12 @@ npm install
 
 # Build the project
 npm run build
+
+# Run the server
+npm start
+
+# Run in development mode (with TypeScript)
+npm run start:dev
 ```
 
 **日本語**
@@ -152,6 +172,12 @@ npm install
 
 # プロジェクトのビルド
 npm run build
+
+# サーバーの実行
+npm start
+
+# 開発モードで実行（TypeScriptで直接実行）
+npm run start:dev
 ```
 
 ## Example Queries
@@ -220,8 +246,8 @@ Here are some example queries you can use with this server:
 
 ## License
 
-This MCP server is licensed under the MIT License. This means you are free to use, modify, and distribute the software, subject to the terms and conditions of the MIT License. For more details, please see the LICENSE file in the project repository.
+This MCP server is licensed under the MIT License. This means you are free to use, modify, and distribute the software, subject to the terms and conditions of the MIT License.
 
 **日本語**
 
-この MCP サーバーは MIT ライセンスの下でライセンスされています。これは、MIT ライセンスの利用規約に従って、ソフトウェアを自由に使用、変更、配布できることを意味します。詳細については、プロジェクトリポジトリの LICENSE ファイルを参照してください。
+この MCP サーバーは MIT ライセンスの下でライセンスされています。これは、MIT ライセンスの利用規約に従って、ソフトウェアを自由に使用、変更、配布できることを意味します。

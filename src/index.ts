@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 // src/index.ts
 // =========================
 // [EN] Entry point for GNews MCP Server
