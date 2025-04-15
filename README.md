@@ -134,7 +134,7 @@ docker build -t mcp/gnews:latest .
 docker run -i --rm -e GNEWS_API_KEY=YOUR_API_KEY_HERE mcp/gnews
 ```
 
-Local build:
+Local build and run:
 
 ```bash
 # Install dependencies
@@ -142,9 +142,6 @@ npm install
 
 # Build the project
 npm run build
-
-# Run the server
-npm start
 ```
 
 **日本語**
@@ -155,9 +152,6 @@ npm install
 
 # プロジェクトのビルド
 npm run build
-
-# サーバーの実行
-npm start
 ```
 
 ## Example Queries
