@@ -1,0 +1,42 @@
+{
+  "name": "@modelcontextprotocol/server-yahoo-news",
+  "version": "0.1.0",
+  "description": "MCP server for Yahoo News RSS feeds",
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "mcp-server-yahoo-news": "dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "test": "jest",
+    "build": "tsc && shx chmod +x dist/*.js",
+    "prepare": "npm run build",
+    "start": "node dist/index.js",
+    "dev": "tsc -w"
+  },
+  "keywords": [
+    "mcp",
+    "yahoo",
+    "news",
+    "rss",
+    "llm"
+  ],
+  "author": "",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.0.1",
+    "rss-parser": "^3.13.0",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.14",
+    "@types/node": "^22.14.1",
+    "jest": "^29.7.0",
+    "shx": "^0.3.4",
+    "ts-jest": "^29.3.2",
+    "typescript": "^5.8.3",
+    "zod-to-json-schema": "^3.24.5"
+  }
+}
