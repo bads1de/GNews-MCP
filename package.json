@@ -1,11 +1,11 @@
 {
-  "name": "@modelcontextprotocol/server-yahoo-news",
+  "name": "@modelcontextprotocol/server-gnews",
   "version": "0.1.0",
-  "description": "MCP server for Yahoo News RSS feeds",
+  "description": "MCP server for GNews API",
   "license": "MIT",
   "type": "module",
   "bin": {
-    "mcp-server-yahoo-news": "dist/index.js"
+    "mcp-server-gnews": "dist/index.js"
   },
   "files": [
     "dist"
@@ -19,14 +19,16 @@
   },
   "keywords": [
     "mcp",
-    "yahoo",
+    "gnews",
     "news",
-    "rss",
+    "api",
     "llm"
   ],
   "author": "",
   "dependencies": {
     "@modelcontextprotocol/sdk": "1.0.1",
+    "axios": "^1.8.4",
+    "dotenv": "^16.5.0",
     "rss-parser": "^3.13.0",
     "zod": "^3.24.2"
   },

@@ -10,4 +10,4 @@ RUN npm ci --only=production
 COPY dist/ ./dist/
 
 # Run the server
-ENTRYPOINT ["node", "dist/server.js"]
+ENTRYPOINT ["node", "dist/index.js"]
