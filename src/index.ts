@@ -1,8 +1,9 @@
-#!/usr/bin/env node
-
 // src/index.ts
 // =========================
-// GNews MCPサーバーのエントリーポイント
+// [EN] Entry point for GNews MCP Server
+// Provides news search and top headlines retrieval tools as an MCP server
+//
+// [JA] GNews MCPサーバーのエントリーポイント
 // ニュース検索・トップヘッドライン取得のツールをMCPサーバーとして提供
 // =========================
 
@@ -17,7 +18,13 @@ import { searchNews, getTopHeadlines, formatArticles } from "./gnews.js";
 import { SearchNewsSchema, TopHeadlinesSchema } from "./types.js";
 
 /**
- * ニュース検索ツールの定義
+ * [EN] Definition of the news search tool
+ *
+ * - name: Tool name
+ * - description: Tool description
+ * - inputSchema: Input parameter schema
+ *
+ * [JA] ニュース検索ツールの定義
  *
  * - name: ツール名
  * - description: ツールの説明
@@ -26,35 +33,35 @@ import { SearchNewsSchema, TopHeadlinesSchema } from "./types.js";
 const SEARCH_NEWS_TOOL: Tool = {
   name: "search-news",
   description:
-    "キーワードでニュースを検索する。指定されたキーワードに一致する記事を検索し、タイトル、発行日、リンク、概要を含む記事のリストを返します。",
+    "Search for news articles by keyword. Returns a list of articles matching the specified keyword, including title, publication date, link, and description.",
   inputSchema: {
     type: "object",
     properties: {
       keyword: {
         type: "string",
         minLength: 1,
-        description: "検索キーワード",
+        description: "Search keyword",
       },
       lang: {
         type: "string",
         minLength: 2,
         maxLength: 2,
         default: "ja",
-        description: "言語コード（例: ja, en, fr）",
+        description: "Language code (e.g. ja, en, fr)",
       },
       country: {
         type: "string",
         minLength: 2,
         maxLength: 2,
         default: "jp",
-        description: "国コード（例: jp, us, gb）",
+        description: "Country code (e.g. jp, us, gb)",
       },
       max: {
         type: "number",
         minimum: 1,
         maximum: 10,
         default: 5,
-        description: "取得するニュース記事の数（最大10）",
+        description: "Number of news articles to retrieve (max 10, default 5)",
       },
     },
     required: ["keyword"],
@@ -62,7 +69,13 @@ const SEARCH_NEWS_TOOL: Tool = {
 };
 
 /**
- * トップヘッドライン取得ツールの定義
+ * [EN] Definition of the top headlines tool
+ *
+ * - name: Tool name
+ * - description: Tool description
+ * - inputSchema: Input parameter schema
+ *
+ * [JA] トップヘッドライン取得ツールの定義
  *
  * - name: ツール名
  * - description: ツールの説明
@@ -71,7 +84,7 @@ const SEARCH_NEWS_TOOL: Tool = {
 const TOP_HEADLINES_TOOL: Tool = {
   name: "get-top-headlines",
   description:
-    "指定されたカテゴリの最新トップヘッドラインニュースを取得する。タイトル、発行日、リンク、概要を含む記事のリストを返します。",
+    "Get the latest top headline news for the specified category. Returns a list of articles including title, publication date, link, and description.",
   inputSchema: {
     type: "object",
     properties: {
@@ -89,35 +102,38 @@ const TOP_HEADLINES_TOOL: Tool = {
           "health",
         ],
         default: "general",
-        description: "ニュースカテゴリ",
+        description: "News category",
       },
       lang: {
         type: "string",
         minLength: 2,
         maxLength: 2,
         default: "ja",
-        description: "言語コード（例: ja, en, fr）",
+        description: "Language code (e.g. ja, en, fr)",
       },
       country: {
         type: "string",
         minLength: 2,
         maxLength: 2,
         default: "jp",
-        description: "国コード（例: jp, us, gb）",
+        description: "Country code (e.g. jp, us, gb)",
       },
       max: {
         type: "number",
         minimum: 1,
         maximum: 10,
         default: 5,
-        description: "取得するニュース記事の数（最大10）",
+        description: "Number of news articles to retrieve (max 10, default 5)",
       },
     },
   },
 };
 
 /**
- * サーバーインスタンスの作成
+ * [EN] Create server instance
+ * Initialize MCP server. capabilities.tools is initialized empty, and tools are registered later with setRequestHandler.
+ *
+ * [JA] サーバーインスタンスの作成
  * MCPサーバーの初期化。capabilities.toolsは空で初期化し、後でsetRequestHandlerでツールを登録する。
  */
 const server = new Server(
@@ -133,7 +149,11 @@ const server = new Server(
 );
 
 // =========================
-// 難所: APIキーの存在チェック
+// [EN] Critical point: API key existence check
+// If GNEWS_API_KEY is not set before server startup, exit immediately with an error.
+// This prevents unexpected behavior when API key is not set.
+//
+// [JA] 難所: APIキーの存在チェック
 // サーバー起動前にGNEWS_API_KEYが設定されていない場合は即座にエラー終了する。
 // ここで止めることで、APIキー未設定時の予期せぬ挙動を防ぐ。
 // =========================
@@ -143,7 +163,10 @@ if (!process.env.GNEWS_API_KEY) {
 }
 
 /**
- * ツール一覧リクエストのハンドラー
+ * [EN] Handler for list tools request
+ * Returns available tools in response to ListToolsRequestSchema.
+ *
+ * [JA] ツール一覧リクエストのハンドラー
  * ListToolsRequestSchemaに対して、利用可能なツールを返す。
  */
 server.setRequestHandler(ListToolsRequestSchema, async () => ({
@@ -151,7 +174,16 @@ server.setRequestHandler(ListToolsRequestSchema, async () => ({
 }));
 
 /**
- * ツール呼び出しリクエストのハンドラー
+ * [EN] Handler for call tool request
+ *
+ * - name: Name of the tool to call
+ * - arguments: Arguments to the tool
+ *
+ * Critical point: Validate input with schema for each tool,
+ *        return errors via catch block if validation fails.
+ *        Design uses exception handling to return error details to the user.
+ *
+ * [JA] ツール呼び出しリクエストのハンドラー
  *
  * - name: 呼び出すツール名
  * - arguments: ツールへの引数
@@ -170,7 +202,9 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
 
     switch (name) {
       case "search-news": {
-        // 難所: 入力バリデーション（zodスキーマ）
+        // [EN] Critical point: Input validation (zod schema)
+        // If input is invalid, an exception will be thrown
+        // [JA] 難所: 入力バリデーション（zodスキーマ）
         // 入力値が不正な場合は例外が投げられる
         const { keyword, lang, country, max } = SearchNewsSchema.parse(args);
 
@@ -184,7 +218,8 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
       }
 
       case "get-top-headlines": {
-        // 難所: 入力バリデーション（zodスキーマ）
+        // [EN] Critical point: Input validation (zod schema)
+        // [JA] 難所: 入力バリデーション（zodスキーマ）
         const { category, lang, country, max } = TopHeadlinesSchema.parse(args);
 
         const articles = await getTopHeadlines(category, lang, country, max);
@@ -197,14 +232,17 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
       }
 
       default:
-        // 未知のツール名が指定された場合のエラー応答
+        // [EN] Error response for unknown tool name
+        // [JA] 未知のツール名が指定された場合のエラー応答
         return {
           content: [{ type: "text", text: `Unknown tool: ${name}` }],
           isError: true,
         };
     }
   } catch (error) {
-    // 難所: 例外発生時のエラーハンドリング
+    // [EN] Critical point: Error handling for exceptions
+    // Branch message based on whether error is Error type
+    // [JA] 難所: 例外発生時のエラーハンドリング
     // errorがError型かどうかでメッセージを分岐
     console.error("Tool execution error:", error);
 
@@ -223,7 +261,13 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
 });
 
 /**
- * サーバーを起動する関数
+ * [EN] Function to start the server
+ *
+ * Critical point: Start server with stdio transport,
+ *       wait for connection completion asynchronously.
+ *       Log fatal errors with catch block.
+ *
+ * [JA] サーバーを起動する関数
  *
  * 難所: stdioトランスポートでサーバーを起動し、
  *       非同期で接続完了を待つ。
@@ -238,7 +282,11 @@ async function runServer() {
 }
 
 // =========================
-// サーバー起動
+// [EN] Server startup
+// Catch errors from runServer(),
+// and exit the process as a fatal error.
+//
+// [JA] サーバー起動
 // runServer()のエラーはcatchで捕捉し、
 // 致命的エラーとしてプロセスを終了する。
 // =========================

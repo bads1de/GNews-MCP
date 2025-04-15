@@ -1,8 +1,16 @@
 # GNews API MCP Server
 
+## English
+
 An MCP server implementation that integrates with the GNews API, providing access to the latest news articles across various categories and languages.
 
+## 日本語
+
+GNews API と連携する MCP サーバーの実装で、様々なカテゴリや言語にわたる最新のニュース記事へのアクセスを提供します。
+
 ## Features
+
+### English
 
 - **Global News Coverage**: Access news from over 60,000 sources worldwide
 - **Multiple Languages**: Support for 22 languages including Japanese, English, and more
@@ -11,7 +19,18 @@ An MCP server implementation that integrates with the GNews API, providing acces
 - **Customizable Results**: Control the number of results returned
 - **Rich Content**: Get article titles, publication dates, links, and content snippets
 
+### 日本語
+
+- **グローバルニュースカバレッジ**: 世界中の 60,000 以上のソースからニュースにアクセス
+- **複数言語対応**: 日本語、英語を含む、22 の言語をサポート
+- **カテゴリベースのニュース**: 一般、ビジネス、テクノロジー、スポーツなど、様々なカテゴリのニュースにアクセス
+- **キーワード検索**: 特定のキーワードを含むニュース記事を検索
+- **カスタマイズ可能な結果**: 返される結果の数を制御
+- **リッチコンテンツ**: 記事のタイトル、発行日、リンク、コンテンツスニペットを取得
+
 ## Tools
+
+### English
 
 - **search-news**
 
@@ -30,15 +49,48 @@ An MCP server implementation that integrates with the GNews API, providing acces
     - `country` (string, optional): Country code (default: jp)
     - `max` (number, optional): Number of results to return (max 10, default 5)
 
+### 日本語
+
+- **search-news**
+
+  - 特定のキーワードを含むニュース記事を検索
+  - 入力パラメータ:
+    - `keyword` (string): 検索キーワード
+    - `lang` (string, オプション): 言語コード (デフォルト: ja)
+    - `country` (string, オプション): 国コード (デフォルト: jp)
+    - `max` (number, オプション): 返される結果の数 (最大 10、デフォルト 5)
+
+- **get-top-headlines**
+  - 指定されたカテゴリの最新トップヘッドラインを取得
+  - 入力パラメータ:
+    - `category` (string, オプション): ニュースカテゴリ (general, world, nation, business, technology, entertainment, sports, science, health)
+    - `lang` (string, オプション): 言語コード (デフォルト: ja)
+    - `country` (string, オプション): 国コード (デフォルト: jp)
+    - `max` (number, オプション): 返される結果の数 (最大 10、デフォルト 5)
+
 ## Setup
 
-### API Key
+### English
+
+#### API Key
 
 You need to obtain an API key from [GNews.io](https://gnews.io/register). Once you have your API key, you'll need to provide it as an environment variable when running the server.
 
+### 日本語
+
+#### API キー
+
+[GNews.io](https://gnews.io/register) から API キーを取得する必要があります。API キーを取得したら、サーバー実行時に環境変数として提供する必要があります。
+
 ## Usage with Claude Desktop
 
+### English
+
 Add this to your `claude_desktop_config.json`:
+
+### 日本語
+
+`claude_desktop_config.json` に以下を追加します：
 
 ### Docker
 
@@ -74,7 +126,9 @@ Add this to your `claude_desktop_config.json`:
 
 ## Build
 
-### Local Build
+### English
+
+#### Local Build
 
 ```bash
 # Install dependencies
@@ -87,7 +141,30 @@ npm run build
 npm start
 ```
 
-### Docker Build
+#### Docker Build
+
+```bash
+docker build -t mcp/gnews:latest .
+# Pass API key as environment variable
+docker run -i --rm -e GNEWS_API_KEY=YOUR_API_KEY_HERE mcp/gnews
+```
+
+### 日本語
+
+#### ローカルビルド
+
+```bash
+# 依存関係のインストール
+npm install
+
+# プロジェクトのビルド
+npm run build
+
+# サーバーの実行
+npm start
+```
+
+#### Docker ビルド
 
 ```bash
 docker build -t mcp/gnews:latest .
@@ -96,6 +173,8 @@ docker run -i --rm -e GNEWS_API_KEY=YOUR_API_KEY_HERE mcp/gnews
 ```
 
 ## Example Queries
+
+### English
 
 Here are some example queries you can use with this server:
 
@@ -122,12 +201,53 @@ Here are some example queries you can use with this server:
    Show me the top 3 business headlines
    ```
 
+### 日本語
+
+このサーバーで使用できるクエリの例をいくつか紹介します：
+
+1. 特定のトピックに関するニュースを検索：
+
+   ```
+   人工知能に関するニュースを検索
+   ```
+
+2. テクノロジーカテゴリのトップヘッドラインを取得：
+
+   ```
+   最新のテクノロジーヘッドラインを取得
+   ```
+
+3. 特定の言語と国のニュースを検索：
+
+   ```
+   米国の英語で気候変動に関するニュースを探す
+   ```
+
+4. 上限を指定してビジネスニュースを取得：
+   ```
+   ビジネスのトップ3件のヘッドラインを表示
+   ```
+
 ## Limitations
+
+### English
 
 - The free plan of GNews API is limited to 100 requests per day
 - The free plan does not include full article content
 - Commercial use requires a paid subscription
 
+### 日本語
+
+- GNews API の無料プランは 1 日あたり 100 リクエストに制限されています
+- 無料プランには完全な記事コンテンツは含まれません
+- 商用利用には有料サブスクリプションが必要です
+
 ## License
 
+### English
+
 This MCP server is licensed under the MIT License. This means you are free to use, modify, and distribute the software, subject to the terms and conditions of the MIT License. For more details, please see the LICENSE file in the project repository.
+
+### 日本語
+
+この MCP サーバーは MIT ライセンスの下でライセンスされています。これは、MIT ライセンスの利用規約に従って、ソフトウェアを自由に使用、変更、配布できることを意味します。詳細については、プロジェクトリポジトリの LICENSE ファイルを参照してください。

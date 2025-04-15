@@ -1,19 +1,17 @@
-// src/gnews.ts
 import axios from "axios";
 
-// GNews APIのベースURL
 const GNEWS_API_BASE_URL = "https://gnews.io/api/v4";
-
-// APIキーの取得（環境変数から）
 const GNEWS_API_KEY = process.env.GNEWS_API_KEY;
 
-// GNews APIのレスポンス型
+// [EN] Response type for GNews API
+// [JA] GNews APIのレスポンス型
 export interface GNewsResponse {
   totalArticles: number;
   articles: Article[];
 }
 
-// 記事の型
+// [EN] Article type
+// [JA] 記事の型
 export interface Article {
   title: string;
   description: string;
@@ -28,7 +26,14 @@ export interface Article {
 }
 
 /**
- * キーワードでニュース記事を検索する
+ * [EN] Search for news articles by keyword
+ * @param keyword Search keyword
+ * @param lang Language code (default: ja)
+ * @param country Country code (default: jp)
+ * @param max Maximum number of articles to retrieve (default: 5)
+ * @returns Array of articles matching the search
+ *
+ * [JA] キーワードでニュース記事を検索する
  * @param keyword 検索キーワード
  * @param lang 言語コード（デフォルト: ja）
  * @param country 国コード（デフォルト: jp）
@@ -79,7 +84,14 @@ export async function searchNews(
 }
 
 /**
- * トップヘッドラインのニュース記事を取得する
+ * [EN] Get top headline news articles
+ * @param category Category (default: general)
+ * @param lang Language code (default: ja)
+ * @param country Country code (default: jp)
+ * @param max Maximum number of articles to retrieve (default: 5)
+ * @returns Array of top headline articles
+ *
+ * [JA] トップヘッドラインのニュース記事を取得する
  * @param category カテゴリ（デフォルト: general）
  * @param lang 言語コード（デフォルト: ja）
  * @param country 国コード（デフォルト: jp）
@@ -130,7 +142,11 @@ export async function getTopHeadlines(
 }
 
 /**
- * 記事を整形された文字列に変換する
+ * [EN] Convert articles to a formatted string
+ * @param articles Array of articles
+ * @returns Formatted string of articles
+ *
+ * [JA] 記事を整形された文字列に変換する
  * @param articles 記事の配列
  * @returns 整形された記事の文字列
  */
