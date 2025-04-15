@@ -165,7 +165,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
     const { name, arguments: args } = request.params;
 
     if (!args) {
-      throw new Error("引数が提供されていません");
+      throw new Error("No arguments provided");
     }
 
     switch (name) {
@@ -173,39 +173,46 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
         // 難所: 入力バリデーション（zodスキーマ）
         // 入力値が不正な場合は例外が投げられる
         const { keyword, lang, country, max } = SearchNewsSchema.parse(args);
+
         const articles = await searchNews(keyword, lang, country, max);
         const results = formatArticles(articles);
+
         return {
           content: [{ type: "text", text: results }],
           isError: false,
         };
       }
+
       case "get-top-headlines": {
         // 難所: 入力バリデーション（zodスキーマ）
         const { category, lang, country, max } = TopHeadlinesSchema.parse(args);
+
         const articles = await getTopHeadlines(category, lang, country, max);
         const results = formatArticles(articles);
+
         return {
           content: [{ type: "text", text: results }],
           isError: false,
         };
       }
+
       default:
         // 未知のツール名が指定された場合のエラー応答
         return {
-          content: [{ type: "text", text: `未知のツール: ${name}` }],
+          content: [{ type: "text", text: `Unknown tool: ${name}` }],
           isError: true,
         };
     }
   } catch (error) {
     // 難所: 例外発生時のエラーハンドリング
     // errorがError型かどうかでメッセージを分岐
-    console.error("ツール実行エラー:", error);
+    console.error("Tool execution error:", error);
+
     return {
       content: [
         {
           type: "text",
-          text: `エラー: ${
+          text: `Error: ${
             error instanceof Error ? error.message : String(error)
           }`,
         },
@@ -224,7 +231,9 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
  */
 async function runServer() {
   const transport = new StdioServerTransport();
+
   await server.connect(transport);
+
   console.error("GNews MCP Server running on stdio");
 }
 
@@ -235,5 +244,6 @@ async function runServer() {
 // =========================
 runServer().catch((error) => {
   console.error("Fatal error running server:", error);
+
   process.exit(1);
 });

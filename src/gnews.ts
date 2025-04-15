@@ -43,12 +43,13 @@ export async function searchNews(
 ): Promise<Article[]> {
   try {
     if (!GNEWS_API_KEY) {
-      throw new Error("GNews APIキーが設定されていません。");
+      throw new Error("GNews API key is not set.");
     }
 
-    console.error(`[INFO] キーワード「${keyword}」で検索します`);
+    console.error(`[INFO] Searching with keyword "${keyword}"`);
 
     const url = `${GNEWS_API_BASE_URL}/search`;
+
     const response = await axios.get<GNewsResponse>(url, {
       params: {
         q: keyword,
@@ -59,19 +60,18 @@ export async function searchNews(
       },
     });
 
-    console.error(
-      `[INFO] ${response.data.articles.length}件の記事が見つかりました`
-    );
+    console.error(`[INFO] Found ${response.data.articles.length} articles`);
+
     return response.data.articles;
   } catch (error) {
-    console.error("ニュース検索エラー:", error);
+    console.error("News search error:", error);
+
     if (axios.isAxiosError(error) && error.response?.status === 403) {
-      throw new Error(
-        "APIの日次クォータに達しました。明日再試行してください。"
-      );
+      throw new Error("API daily quota reached. Please try again tomorrow.");
     }
+
     throw new Error(
-      `ニュースの検索中にエラーが発生しました: ${
+      `Error occurred while searching for news: ${
         error instanceof Error ? error.message : String(error)
       }`
     );
@@ -94,14 +94,13 @@ export async function getTopHeadlines(
 ): Promise<Article[]> {
   try {
     if (!GNEWS_API_KEY) {
-      throw new Error("GNews APIキーが設定されていません。");
+      throw new Error("GNews API key is not set.");
     }
 
-    console.error(
-      `[INFO] カテゴリ「${category}」のトップヘッドラインを取得します`
-    );
+    console.error(`[INFO] Fetching top headlines for category "${category}"`);
 
     const url = `${GNEWS_API_BASE_URL}/top-headlines`;
+
     const response = await axios.get<GNewsResponse>(url, {
       params: {
         category,
@@ -112,19 +111,18 @@ export async function getTopHeadlines(
       },
     });
 
-    console.error(
-      `[INFO] ${response.data.articles.length}件の記事が見つかりました`
-    );
+    console.error(`[INFO] Found ${response.data.articles.length} articles`);
+
     return response.data.articles;
   } catch (error) {
-    console.error("トップヘッドライン取得エラー:", error);
+    console.error("Top headlines fetch error:", error);
+
     if (axios.isAxiosError(error) && error.response?.status === 403) {
-      throw new Error(
-        "APIの日次クォータに達しました。明日再試行してください。"
-      );
+      throw new Error("API daily quota reached. Please try again tomorrow.");
     }
+
     throw new Error(
-      `トップヘッドラインの取得中にエラーが発生しました: ${
+      `Error occurred while fetching top headlines: ${
         error instanceof Error ? error.message : String(error)
       }`
     );
@@ -138,14 +136,14 @@ export async function getTopHeadlines(
  */
 export function formatArticles(articles: Article[]): string {
   if (articles.length === 0) {
-    return "記事が見つかりませんでした。";
+    return "No articles found.";
   }
 
   return articles
     .map((article, index) => {
-      return `${index + 1}. ${article.title}\n   発行日: ${
+      return `${index + 1}. ${article.title}\n   Published: ${
         article.publishedAt
-      }\n   ソース: ${article.source.name}\n   リンク: ${article.url}\n   ${
+      }\n   Source: ${article.source.name}\n   Link: ${article.url}\n   ${
         article.description || ""
       }\n`;
     })

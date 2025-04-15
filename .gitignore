@@ -16,9 +16,6 @@ dist/
 build/
 out/
 
-# Test coverage
-coverage/
-
 # dotenv environment variable files
 .env
 .env.local
@@ -34,6 +31,7 @@ yarn-error.log*
 # IDE files
 .idea/
 .vscode/
+
 .Docs/
 *.swp
 *.swo
