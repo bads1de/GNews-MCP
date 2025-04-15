@@ -1,16 +1,10 @@
 # GNews API MCP Server
 
-## English
-
 An MCP server implementation that integrates with the GNews API, providing access to the latest news articles across various categories and languages.
-
-## 日本語
 
 GNews API と連携する MCP サーバーの実装で、様々なカテゴリや言語にわたる最新のニュース記事へのアクセスを提供します。
 
 ## Features
-
-### English
 
 - **Global News Coverage**: Access news from over 60,000 sources worldwide
 - **Multiple Languages**: Support for 22 languages including Japanese, English, and more
@@ -19,7 +13,7 @@ GNews API と連携する MCP サーバーの実装で、様々なカテゴリ�
 - **Customizable Results**: Control the number of results returned
 - **Rich Content**: Get article titles, publication dates, links, and content snippets
 
-### 日本語
+**日本語**
 
 - **グローバルニュースカバレッジ**: 世界中の 60,000 以上のソースからニュースにアクセス
 - **複数言語対応**: 日本語、英語を含む、22 の言語をサポート
@@ -29,8 +23,6 @@ GNews API と連携する MCP サーバーの実装で、様々なカテゴリ�
 - **リッチコンテンツ**: 記事のタイトル、発行日、リンク、コンテンツスニペットを取得
 
 ## Tools
-
-### English
 
 - **search-news**
 
@@ -49,7 +41,7 @@ GNews API と連携する MCP サーバーの実装で、様々なカテゴリ�
     - `country` (string, optional): Country code (default: jp)
     - `max` (number, optional): Number of results to return (max 10, default 5)
 
-### 日本語
+**日本語**
 
 - **search-news**
 
@@ -68,29 +60,25 @@ GNews API と連携する MCP サーバーの実装で、様々なカテゴリ�
     - `country` (string, オプション): 国コード (デフォルト: jp)
     - `max` (number, オプション): 返される結果の数 (最大 10、デフォルト 5)
 
-## Setup
+## Configuration
 
-### English
+### Getting an API Key
 
-#### API Key
+1. Sign up for a [GNews.io](https://gnews.io/register) account
+2. Choose a plan (Free tier available with 100 requests/day)
+3. Generate your API key
 
-You need to obtain an API key from [GNews.io](https://gnews.io/register). Once you have your API key, you'll need to provide it as an environment variable when running the server.
+**日本語**
 
-### 日本語
+1. [GNews.io](https://gnews.io/register) でアカウントを作成
+2. プランを選択（無料プランは 1 日 100 リクエスト）
+3. API キーを生成
 
-#### API キー
-
-[GNews.io](https://gnews.io/register) から API キーを取得する必要があります。API キーを取得したら、サーバー実行時に環境変数として提供する必要があります。
-
-## Usage with Claude Desktop
-
-### English
+### Usage with Claude Desktop
 
 Add this to your `claude_desktop_config.json`:
 
-### 日本語
-
-`claude_desktop_config.json` に以下を追加します：
+**日本語**: `claude_desktop_config.json` に以下を追加します：
 
 ### Docker
 
@@ -126,9 +114,27 @@ Add this to your `claude_desktop_config.json`:
 
 ## Build
 
-### English
+Docker build:
 
-#### Local Build
+```bash
+# Build the Docker image
+docker build -t mcp/gnews:latest .
+
+# Run the container with your API key
+docker run -i --rm -e GNEWS_API_KEY=YOUR_API_KEY_HERE mcp/gnews
+```
+
+**日本語**
+
+```bash
+# Dockerイメージをビルド
+docker build -t mcp/gnews:latest .
+
+# APIキーを環境変数として渡してコンテナを実行
+docker run -i --rm -e GNEWS_API_KEY=YOUR_API_KEY_HERE mcp/gnews
+```
+
+Local build:
 
 ```bash
 # Install dependencies
@@ -141,17 +147,7 @@ npm run build
 npm start
 ```
 
-#### Docker Build
-
-```bash
-docker build -t mcp/gnews:latest .
-# Pass API key as environment variable
-docker run -i --rm -e GNEWS_API_KEY=YOUR_API_KEY_HERE mcp/gnews
-```
-
-### 日本語
-
-#### ローカルビルド
+**日本語**
 
 ```bash
 # 依存関係のインストール
@@ -164,17 +160,7 @@ npm run build
 npm start
 ```
 
-#### Docker ビルド
-
-```bash
-docker build -t mcp/gnews:latest .
-# APIキーを環境変数として渡す
-docker run -i --rm -e GNEWS_API_KEY=YOUR_API_KEY_HERE mcp/gnews
-```
-
 ## Example Queries
-
-### English
 
 Here are some example queries you can use with this server:
 
@@ -201,9 +187,7 @@ Here are some example queries you can use with this server:
    Show me the top 3 business headlines
    ```
 
-### 日本語
-
-このサーバーで使用できるクエリの例をいくつか紹介します：
+**日本語**
 
 1. 特定のトピックに関するニュースを検索：
 
@@ -230,13 +214,11 @@ Here are some example queries you can use with this server:
 
 ## Limitations
 
-### English
-
 - The free plan of GNews API is limited to 100 requests per day
 - The free plan does not include full article content
 - Commercial use requires a paid subscription
 
-### 日本語
+**日本語**
 
 - GNews API の無料プランは 1 日あたり 100 リクエストに制限されています
 - 無料プランには完全な記事コンテンツは含まれません
@@ -244,10 +226,8 @@ Here are some example queries you can use with this server:
 
 ## License
 
-### English
-
 This MCP server is licensed under the MIT License. This means you are free to use, modify, and distribute the software, subject to the terms and conditions of the MIT License. For more details, please see the LICENSE file in the project repository.
 
-### 日本語
+**日本語**
 
 この MCP サーバーは MIT ライセンスの下でライセンスされています。これは、MIT ライセンスの利用規約に従って、ソフトウェアを自由に使用、変更、配布できることを意味します。詳細については、プロジェクトリポジトリの LICENSE ファイルを参照してください。
