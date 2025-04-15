@@ -243,8 +243,13 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
   }
 });
 
-// ニュース取得関数
-// 指定されたカテゴリのニュースを取得する非同期関数
+/**
+ * 指定されたカテゴリのニュースを取得する
+ * @param {string} category - ニュースカテゴリ (top, domestic, world, business, entertainment, sports, it, science)
+ * @param {number} [limit=5] - 取得する記事の数 (1-20)
+ * @returns {Promise<string>} フォーマットされたニュース記事の文字列
+ * @throws {Error} ニュース取得に失敗した場合
+ */
 async function getNews(category: string, limit: number = 5): Promise<string> {
   try {
     console.error(`[INFO] ${category}カテゴリのニュースを${limit}件取得します`);
@@ -278,8 +283,14 @@ async function getNews(category: string, limit: number = 5): Promise<string> {
   }
 }
 
-// ニュース検索関数
-// 指定されたキーワードとカテゴリでニュースを検索する非同期関数
+/**
+ * 指定されたキーワードとカテゴリでニュースを検索する
+ * @param {string} keyword - 検索キーワード
+ * @param {string} category - ニュースカテゴリ (top, domestic, world, business, entertainment, sports, it, science)
+ * @param {number} [limit=5] - 取得する記事の数 (1-20)
+ * @returns {Promise<string>} フォーマットされたニュース記事の文字列
+ * @throws {Error} ニュース検索に失敗した場合
+ */
 async function searchNews(
   keyword: string,
   category: string,
@@ -331,8 +342,11 @@ async function searchNews(
   }
 }
 
-// サーバーの起動
-// サーバーを起動する非同期関数
+/**
+ * サーバーを起動する
+ * @returns {Promise<void>}
+ * @throws {Error} サーバー起動に失敗した場合
+ */
 async function runServer() {
   // 標準入出力 (stdio) を使用するトランスポートを作成
   const transport = new StdioServerTransport();
