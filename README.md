@@ -87,7 +87,7 @@ Add this to your `claude_desktop_config.json`:
   "mcpServers": {
     "gnews": {
       "command": "docker",
-      "args": ["run", "-i", "--rm", "mcp/gnews"],
+      "args": ["run", "-i", "--rm", "-e", "GNEWS_API_KEY", "mcp/gnews"],
       "env": {
         "GNEWS_API_KEY": "YOUR_API_KEY_HERE"
       }
@@ -135,9 +135,6 @@ Docker build:
 ```bash
 # Build the Docker image
 docker build -t mcp/gnews:latest .
-
-# Run the container with your API key
-docker run -i --rm -e GNEWS_API_KEY=YOUR_API_KEY_HERE mcp/gnews
 ```
 
 **日本語**
@@ -145,9 +142,6 @@ docker run -i --rm -e GNEWS_API_KEY=YOUR_API_KEY_HERE mcp/gnews
 ```bash
 # Dockerイメージをビルド
 docker build -t mcp/gnews:latest .
-
-# APIキーを環境変数として渡してコンテナを実行
-docker run -i --rm -e GNEWS_API_KEY=YOUR_API_KEY_HERE mcp/gnews
 ```
 
 Local build and run:
