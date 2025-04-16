@@ -112,18 +112,20 @@ Add this to your `claude_desktop_config.json`:
 }
 ```
 
-You can also run the server directly from the command line:
+### Local
 
-```bash
-GNEWS_API_KEY=YOUR_API_KEY_HERE npx -y @bads1de/mcp-server-gnews
-```
-
-**日本語**
-
-コマンドラインから直接サーバーを実行することもできます：
-
-```bash
-GNEWS_API_KEY=YOUR_API_KEY_HERE npx -y @bads1de/mcp-server-gnews
+```json
+{
+  "mcpServers": {
+    "gnews": {
+      "command": "node",
+      "args": ["path/to/mcp-server-gnews/dist/index.js"],
+      "env": {
+        "GNEWS_API_KEY": "YOUR_API_KEY_HERE"
+      }
+    }
+  }
+}
 ```
 
 ## Build
@@ -156,12 +158,6 @@ npm install
 
 # Build the project
 npm run build
-
-# Run the server
-npm start
-
-# Run in development mode (with TypeScript)
-npm run start:dev
 ```
 
 **日本語**
@@ -172,12 +168,6 @@ npm install
 
 # プロジェクトのビルド
 npm run build
-
-# サーバーの実行
-npm start
-
-# 開発モードで実行（TypeScriptで直接実行）
-npm run start:dev
 ```
 
 ## Example Queries

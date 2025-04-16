@@ -1,0 +1,32 @@
+# Source files
+src/
+*.ts
+!*.d.ts
+
+# Development files
+.git/
+.github/
+.vscode/
+.idea/
+.editorconfig
+.eslintrc
+.eslintignore
+.prettierrc
+.prettierignore
+tsconfig.json
+jest.config.js
+coverage/
+
+# Docker files
+Dockerfile
+.dockerignore
+
+# Misc
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+.DS_Store
+*.tgz
+.env
+.env.example
